@@ -371,7 +371,7 @@ var Pagination = class {
         } else {
           pageEx.newMessage.components = [pageEx.paginationRow];
         }
-        await collectInteraction.editReply(pageEx.newMessage).catch(() => {
+        await collectInteraction.editReply({ ...pageEx.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [] }).catch(() => {
           this.unableToUpdate();
         });
       } else if (collectInteraction.isStringSelectMenu() && this.option.type === 1 /* StringSelectMenu */ && collectInteraction.customId === (this.option.menuId ?? defaultIds.menu)) {
@@ -400,7 +400,7 @@ var Pagination = class {
         } else {
           pageEx.newMessage.components = [pageEx.paginationRow];
         }
-        await collectInteraction.editReply(pageEx.newMessage).catch(() => {
+        await collectInteraction.editReply({ ...pageEx.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [] }).catch(() => {
           this.unableToUpdate();
         });
       }
