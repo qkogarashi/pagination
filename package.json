@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "A pagination module for Discord.js v14 and DiscordX",
   "main": "dist/index.js",
-  "types": "dist/types.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "build:typedoc": "npx typedoc src/index.ts --out ../../docs/static/api/pagination"
