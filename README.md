@@ -1,117 +1,117 @@
 # @qkogarashi/pagination
 
-Модуль пагинации для Discord.js v14 и DiscordX, который позволяет легко создавать интерактивные сообщения с навигацией по страницам.
+A pagination module for Discord.js v14 and DiscordX that allows you to easily create interactive messages with page navigation.
 
 [![npm version](https://img.shields.io/npm/v/@qkogarashi/pagination.svg)](https://www.npmjs.com/package/@qkogarashi/pagination)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Особенности
+## Features
 
-- 🚀 Поддержка Discord.js v14 и DiscordX
-- 📑 Два типа пагинации: кнопки и выпадающее меню
-- 🔧 Полностью настраиваемый интерфейс
-- 🔄 Динамическая генерация страниц
-- ⚡ Простой и удобный API
-- 📦 Поддержка TypeScript
+- 🚀 Support for Discord.js v14 and DiscordX
+- 📑 Two pagination types: buttons and dropdown menu
+- 🔧 Fully customizable interface
+- 🔄 Dynamic page generation
+- ⚡ Simple and user-friendly API
+- 📦 TypeScript support
 
-## Установка
+## Installation
 
 ```bash
 npm install @qkogarashi/pagination
-# или
+# or
 yarn add @qkogarashi/pagination
-# или
+# or
 pnpm add @qkogarashi/pagination
 ```
 
-## Использование
+## Usage
 
-### Базовый пример с кнопками
+### Basic Example with Buttons
 
 ```typescript
 import { Pagination, PaginationType } from '@qkogarashi/pagination';
 import { EmbedBuilder } from 'discord.js';
 
-// Создание эмбедов для страниц
+// Create embeds for pages
 const pages = [
-  { embeds: [new EmbedBuilder().setTitle('Страница 1').setDescription('Содержимое страницы 1')] },
-  { embeds: [new EmbedBuilder().setTitle('Страница 2').setDescription('Содержимое страницы 2')] },
-  { embeds: [new EmbedBuilder().setTitle('Страница 3').setDescription('Содержимое страницы 3')] },
+  { embeds: [new EmbedBuilder().setTitle('Page 1').setDescription('Content of page 1')] },
+  { embeds: [new EmbedBuilder().setTitle('Page 2').setDescription('Content of page 2')] },
+  { embeds: [new EmbedBuilder().setTitle('Page 3').setDescription('Content of page 3')] },
 ];
 
-// Создание пагинации с кнопками
+// Create pagination with buttons
 const pagination = new Pagination(
-  interaction, // CommandInteraction, ContextMenuCommandInteraction, MessageComponentInteraction или Message
+  interaction, // CommandInteraction, ContextMenuCommandInteraction, MessageComponentInteraction or Message
   pages,
   {
-    type: PaginationType.Button, // Тип пагинации: кнопки
-    time: 60000, // Время ожидания в миллисекундах (по умолчанию 5 минут)
-    enableExit: true, // Включить кнопку выхода
-    ephemeral: false, // Эфемерное сообщение (только для взаимодействий)
-    initialPage: 0, // Начальная страница (по умолчанию 0)
+    type: PaginationType.Button, // Pagination type: buttons
+    time: 60000, // Timeout in milliseconds (default is 5 minutes)
+    enableExit: true, // Enable exit button
+    ephemeral: false, // Ephemeral message (only for interactions)
+    initialPage: 0, // Initial page (default is 0)
   }
 );
 
-// Запуск пагинации
+// Start pagination
 await pagination.start();
 ```
 
-### Пример с выпадающим меню
+### Example with Dropdown Menu
 
 ```typescript
 import { Pagination, PaginationType } from '@qkogarashi/pagination';
 import { EmbedBuilder } from 'discord.js';
 
-// Создание эмбедов для страниц
+// Create embeds for pages
 const pages = [
-  { embeds: [new EmbedBuilder().setTitle('Страница 1').setDescription('Содержимое страницы 1')] },
-  { embeds: [new EmbedBuilder().setTitle('Страница 2').setDescription('Содержимое страницы 2')] },
-  { embeds: [new EmbedBuilder().setTitle('Страница 3').setDescription('Содержимое страницы 3')] },
+  { embeds: [new EmbedBuilder().setTitle('Page 1').setDescription('Content of page 1')] },
+  { embeds: [new EmbedBuilder().setTitle('Page 2').setDescription('Content of page 2')] },
+  { embeds: [new EmbedBuilder().setTitle('Page 3').setDescription('Content of page 3')] },
 ];
 
-// Создание пагинации с выпадающим меню
+// Create pagination with dropdown menu
 const pagination = new Pagination(
   interaction,
   pages,
   {
-    type: PaginationType.StringSelectMenu, // Тип пагинации: выпадающее меню
-    pageText: 'Страница {page}', // Текст для страниц в меню
-    placeholder: 'Выберите страницу', // Текст-подсказка для меню
-    enableExit: true, // Включить опцию выхода
+    type: PaginationType.StringSelectMenu, // Pagination type: dropdown menu
+    pageText: 'Page {page}', // Text for pages in the menu
+    placeholder: 'Select a page', // Placeholder text for the menu
+    enableExit: true, // Enable exit option
     labels: {
-      start: 'В начало',
-      end: 'В конец',
-      exit: 'Закрыть',
+      start: 'Start',
+      end: 'End',
+      exit: 'Close',
     },
   }
 );
 
-// Запуск пагинации
+// Start pagination
 await pagination.start();
 ```
 
-### Динамическая генерация страниц
+### Dynamic Page Generation
 
 ```typescript
 import { Pagination, PaginationResolver, PaginationType } from '@qkogarashi/pagination';
 import { EmbedBuilder } from 'discord.js';
 
-// Создание резолвера для динамической генерации страниц
+// Create resolver for dynamic page generation
 const resolver = new PaginationResolver(
   async (page) => {
-    // Здесь можно выполнить асинхронные операции, например, запрос к базе данных
+    // Here you can perform asynchronous operations, such as database queries
     return {
       embeds: [
         new EmbedBuilder()
-          .setTitle(`Динамическая страница ${page + 1}`)
-          .setDescription(`Это динамически сгенерированная страница ${page + 1}`)
+          .setTitle(`Dynamic Page ${page + 1}`)
+          .setDescription(`This is a dynamically generated page ${page + 1}`)
       ]
     };
   },
-  10 // Общее количество страниц
+  10 // Total number of pages
 );
 
-// Создание пагинации с динамическим резолвером
+// Create pagination with dynamic resolver
 const pagination = new Pagination(
   interaction,
   resolver,
@@ -121,15 +121,15 @@ const pagination = new Pagination(
   }
 );
 
-// Запуск пагинации
+// Start pagination
 await pagination.start();
 ```
 
 ## API
 
-### Класс `Pagination`
+### `Pagination` Class
 
-Основной класс для создания пагинации.
+The main class for creating pagination.
 
 ```typescript
 constructor(
@@ -139,52 +139,52 @@ constructor(
 )
 ```
 
-#### Параметры:
+#### Parameters:
 
-- `sendTo`: Место, куда отправить пагинацию (CommandInteraction, ContextMenuCommandInteraction, MessageComponentInteraction, Message или TextBasedChannel)
-- `pages`: Массив страниц или резолвер для динамической генерации
-- `config`: Настройки пагинации
+- `sendTo`: Where to send the pagination (CommandInteraction, ContextMenuCommandInteraction, MessageComponentInteraction, Message, or TextBasedChannel)
+- `pages`: Array of pages or resolver for dynamic generation
+- `config`: Pagination settings
 
-#### Методы:
+#### Methods:
 
-- `start()`: Запускает пагинацию и отправляет сообщение
-- `getPage(page: number)`: Получает страницу по номеру
+- `start()`: Starts pagination and sends the message
+- `getPage(page: number)`: Gets a page by number
 
-### Интерфейс `PaginationOptions`
+### `PaginationOptions` Interface
 
-Настройки пагинации.
+Pagination settings.
 
-#### Общие параметры:
+#### Common Parameters:
 
-- `type`: Тип пагинации (PaginationType.Button или PaginationType.StringSelectMenu)
-- `time`: Время ожидания в миллисекундах (по умолчанию 5 минут)
-- `enableExit`: Включить кнопку/опцию выхода
-- `ephemeral`: Эфемерное сообщение (только для взаимодействий)
-- `initialPage`: Начальная страница (по умолчанию 0)
-- `showStartEnd`: Показывать кнопки/опции начала и конца (по умолчанию true)
-- `onTimeout`: Функция обратного вызова при истечении времени ожидания
-- `debug`: Включить отладочные сообщения
+- `type`: Pagination type (PaginationType.Button or PaginationType.StringSelectMenu)
+- `time`: Timeout in milliseconds (default is 5 minutes)
+- `enableExit`: Enable exit button/option
+- `ephemeral`: Ephemeral message (only for interactions)
+- `initialPage`: Initial page (default is 0)
+- `showStartEnd`: Show start and end buttons/options (default is true)
+- `onTimeout`: Callback function when timeout expires
+- `debug`: Enable debug messages
 
-#### Параметры для кнопок (PaginationType.Button):
+#### Button Parameters (PaginationType.Button):
 
-- `start`: Настройки кнопки "В начало"
-- `end`: Настройки кнопки "В конец"
-- `next`: Настройки кнопки "Вперед"
-- `previous`: Настройки кнопки "Назад"
-- `exit`: Настройки кнопки "Выход"
+- `start`: "Start" button settings
+- `end`: "End" button settings
+- `next`: "Next" button settings
+- `previous`: "Previous" button settings
+- `exit`: "Exit" button settings
 
-#### Параметры для выпадающего меню (PaginationType.StringSelectMenu):
+#### Dropdown Menu Parameters (PaginationType.StringSelectMenu):
 
-- `pageText`: Текст для страниц в меню
-- `placeholder`: Текст-подсказка для меню
-- `menuId`: Пользовательский ID для меню
-- `labels`: Настройки текста для опций "В начало", "В конец" и "Выход"
+- `pageText`: Text for pages in the menu
+- `placeholder`: Placeholder text for the menu
+- `menuId`: Custom ID for the menu
+- `labels`: Text settings for "Start", "End", and "Exit" options
 
-## Лицензия
+## License
 
 [MIT](./MIT-LICENCE)
 
-## Авторы
+## Authors
 
 - [qKogarashi](https://github.com/qKogarashi)
 - [Vijay Meena](https://github.com/vijayymmeena)
