@@ -13,6 +13,7 @@ A pagination module for Discord.js v14 and DiscordX that allows you to easily cr
 - 🔄 Dynamic page generation
 - ⚡ Simple and user-friendly API
 - 📦 TypeScript support
+- 🆕 Support for Discord.js v2 Components
 
 ## Installation
 
@@ -125,6 +126,47 @@ const pagination = new Pagination(
 await pagination.start();
 ```
 
+### Using Discord.js v2 Components
+
+```typescript
+import { Pagination, PaginationType } from '@qkogarashi/pagination';
+import { ContainerBuilder } from 'discord.js';
+
+// Create embeds for pages
+const pages = [
+  { components: [
+      new ContainerBuilder()
+      .addSectionComponents(
+        new SectionBuilder()
+        .addTextDisplayComponents(new TextDisplayBuilder({ content: `Exmple — 1` }))
+      )
+		] 
+  },
+  { components: [
+      new ContainerBuilder()
+      .addSectionComponents(
+        new SectionBuilder()
+        .addTextDisplayComponents(new TextDisplayBuilder({ content: `Exmple — 2` }))
+      )
+		] 
+  },,
+];
+
+// Create pagination with v2 components
+const pagination = new Pagination(
+  interaction,
+  pages,
+  {
+    type: PaginationType.Button,
+    isV2Components: true, // Enable v2 components support
+    enableExit: true,
+  }
+);
+
+// Start pagination
+await pagination.start();
+```
+
 ## API
 
 ### `Pagination` Class
@@ -164,6 +206,7 @@ Pagination settings.
 - `showStartEnd`: Show start and end buttons/options (default is true)
 - `onTimeout`: Callback function when timeout expires
 - `debug`: Enable debug messages
+- `isV2Components`: Enable Discord.js v2 Components support (default is false)
 
 #### Button Parameters (PaginationType.Button):
 
