@@ -1,5 +1,5 @@
 import * as discord_js from 'discord.js';
-import { BaseMessageOptions, JSONEncodable, AttachmentPayload, MessageCollectorOptionsParams, MessageComponentType, Message, APIMessageComponentEmoji, ButtonStyle, ActionRowBuilder, MessageActionRowComponentBuilder, CommandInteraction, MessageComponentInteraction, ContextMenuCommandInteraction, TextBasedChannel, PartialGroupDMChannel, InteractionCollector, ButtonInteraction, StringSelectMenuInteraction } from 'discord.js';
+import { BaseMessageOptions, JSONEncodable, AttachmentPayload, MessageCollectorOptionsParams, MessageComponentType, Message, APIMessageComponentEmoji, ButtonStyle, ActionRowBuilder, MessageActionRowComponentBuilder, APIActionRowComponent, APIButtonComponent, APIChannelSelectComponent, APIMentionableSelectComponent, APIRoleSelectComponent, APIStringSelectComponent, APIUserSelectComponent, CommandInteraction, MessageComponentInteraction, ContextMenuCommandInteraction, TextBasedChannel, PartialGroupDMChannel, InteractionCollector, ButtonInteraction, StringSelectMenuInteraction } from 'discord.js';
 
 declare const defaultTime = 300000;
 declare const defaultIds: {
@@ -52,6 +52,10 @@ interface BasicPaginationOptions extends MessageCollectorOptionsParams<MessageCo
    * Use number to limit based on minimum pages
    */
     showStartEnd?: boolean | number;
+    /**
+   * Use new V2 Components system (default: false)
+   */
+    isV2Components?: boolean;
 }
 interface ButtonOptions {
     /**
@@ -138,7 +142,7 @@ interface IPaginate {
 }
 interface IGeneratePage {
     newMessage: BaseMessageOptions;
-    paginationRow: ActionRowBuilder<MessageActionRowComponentBuilder>;
+    paginationRow: ActionRowBuilder<MessageActionRowComponentBuilder> | APIActionRowComponent<APIButtonComponent | APIChannelSelectComponent | APIMentionableSelectComponent | APIRoleSelectComponent | APIStringSelectComponent | APIUserSelectComponent>;
 }
 
 declare function GeneratePage(item: PaginationItem, page: number, maxPage: number, config: PaginationOptions): IGeneratePage;

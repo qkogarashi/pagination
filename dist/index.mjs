@@ -188,6 +188,7 @@ import {
   ChatInputCommandInteraction,
   CommandInteraction,
   ComponentType,
+  ContainerBuilder,
   ContextMenuCommandInteraction,
   Message,
   MessageComponentInteraction
@@ -249,10 +250,17 @@ var Pagination = class {
       throw Error("Pagination: Page not found send()");
     }
     if (page.newMessage.components) {
-      page.newMessage.components = [
-        ...page.newMessage.components,
-        page.paginationRow
-      ];
+      if (!this.option.isV2Components) {
+        page.newMessage.components = [
+          ...page.newMessage.components,
+          page.paginationRow
+        ];
+      } else {
+        page.newMessage.components = [
+          ...page.newMessage.components,
+          new ContainerBuilder().addActionRowComponents(page.paginationRow)
+        ];
+      }
     } else {
       page.newMessage.components = [page.paginationRow];
     }

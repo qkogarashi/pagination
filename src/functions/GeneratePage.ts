@@ -113,7 +113,6 @@ export function GeneratePage(
 		}
 
 		const row = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(buttons)
-
 		// reset message payload additional parameters
 		if (!newMessage.embeds) {
 			newMessage.embeds = []
@@ -133,7 +132,6 @@ export function GeneratePage(
 	/**
    * Pagination type select menu
    */
-
 	const paginator = Paginate(maxPage, page, 1, 21).pages.map((i) => {
 		// get custom page title
 		const text = config.pageText instanceof Array

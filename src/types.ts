@@ -1,6 +1,13 @@
 import type {
 	ActionRowBuilder,
+	APIActionRowComponent,
+	APIButtonComponent,
+	APIChannelSelectComponent,
+	APIMentionableSelectComponent,
 	APIMessageComponentEmoji,
+	APIRoleSelectComponent,
+	APIStringSelectComponent,
+	APIUserSelectComponent,
 	AttachmentPayload,
 	BaseMessageOptions,
 	ButtonStyle,
@@ -85,6 +92,11 @@ interface BasicPaginationOptions
    * Use number to limit based on minimum pages
    */
 	showStartEnd?: boolean | number;
+
+	/**
+   * Use new V2 Components system (default: false)
+   */
+	isV2Components?: boolean;
 }
 
 interface ButtonOptions {
@@ -191,5 +203,9 @@ export interface IPaginate {
 
 export interface IGeneratePage {
 	newMessage: BaseMessageOptions;
-	paginationRow: ActionRowBuilder<MessageActionRowComponentBuilder>;
+	paginationRow: ActionRowBuilder<MessageActionRowComponentBuilder> |
+		APIActionRowComponent<
+			APIButtonComponent | APIChannelSelectComponent | APIMentionableSelectComponent
+			| APIRoleSelectComponent | APIStringSelectComponent | APIUserSelectComponent
+		>
 }
