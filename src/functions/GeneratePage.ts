@@ -126,7 +126,7 @@ export function GeneratePage(
 			newMessage.attachments = []
 		}
 
-		return { newMessage, paginationRow: row }
+		return { newMessage: newMessage, paginationRow: row }
 	}
 
 	/**

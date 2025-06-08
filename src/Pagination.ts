@@ -136,13 +136,13 @@ export class Pagination<T extends PaginationResolver = PaginationResolver> {
 		let message: Message
 
 		if (this.sendTo instanceof Message) {
-			message = await this.sendTo.reply(page.newMessage)
+			message = await this.sendTo.reply({ ...page.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [], })
 		} else if (this.sendTo instanceof CommandInteraction || this.sendTo instanceof ContextMenuCommandInteraction) {
 			if (this.sendTo.deferred || this.sendTo.replied) {
 				this._isFollowUp = true
 			}
 
-			const replyMessage = await this.sendTo[this._isFollowUp ? "followUp" : "reply"](page.newMessage)
+			const replyMessage = await this.sendTo[this._isFollowUp ? "followUp" : "reply"]({ ...page.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [], })
 			if (!replyMessage) {
 				throw Error("Failure to reply for CommandInteraction or ContextMenuCommandInteraction")
 			}
@@ -153,7 +153,7 @@ export class Pagination<T extends PaginationResolver = PaginationResolver> {
 				this._isFollowUp = true
 			}
 
-			const updatedMessage = await this.sendTo[this._isFollowUp ? "followUp" : "update"](page.newMessage)
+			const updatedMessage = await this.sendTo[this._isFollowUp ? "followUp" : "update"]({ ...page.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [], })
 			if (!updatedMessage) {
 				throw Error("Failure to update MessageComponentInteraction message")
 			}
@@ -163,7 +163,7 @@ export class Pagination<T extends PaginationResolver = PaginationResolver> {
 				throw Error("Pagination not supported with guild stage channel")
 			}
 
-			message = await this.sendTo.send(page.newMessage)
+			message = await this.sendTo.send({ ...page.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [], })
 		}
 
 		this.collector = await this.createCollector(message)
