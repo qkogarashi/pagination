@@ -132,7 +132,6 @@ dist
 
 /node_modules/
 /.idea/
-/dist/
 /.vscode/
 /patches/
 biome.json
