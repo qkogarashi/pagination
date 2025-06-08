@@ -46,7 +46,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/devRael1/discordjs-pagination"
+    "url": "git+https://github.com/devRael1/discordjs-pagination.git"
   },
   "devDependencies": {
     "tsc-alias": "^1.8.16",
