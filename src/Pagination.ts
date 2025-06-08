@@ -116,21 +116,27 @@ export class Pagination<T extends PaginationResolver = PaginationResolver> {
 			throw Error("Pagination: Page not found send()")
 		}
 
-		// Add a pagination row to components
 		if (page.newMessage.components) {
-			if (!this.option.isV2Components) {
+			if (this.option.isV2Components) {
+				const lastContainer = page.newMessage.components[page.newMessage.components.length - 1]
+				if (lastContainer instanceof ContainerBuilder) {
+					lastContainer.addActionRowComponents(page.paginationRow)
+				} else {
+					page.newMessage.components = [
+						...page.newMessage.components,
+						new ContainerBuilder().addActionRowComponents(page.paginationRow),
+					]
+				}
+			} else {
 				page.newMessage.components = [
 					...page.newMessage.components,
 					page.paginationRow,
 				]
-			} else {
-				page.newMessage.components = [
-					...page.newMessage.components,
-					new ContainerBuilder().addActionRowComponents(page.paginationRow)
-				]
 			}
 		} else {
-			page.newMessage.components = [page.paginationRow]
+			page.newMessage.components = this.option.isV2Components
+				? [new ContainerBuilder().addActionRowComponents(page.paginationRow)]
+				: [page.paginationRow]
 		}
 
 		let message: Message
@@ -223,13 +229,28 @@ export class Pagination<T extends PaginationResolver = PaginationResolver> {
 				}
 
 				if (pageEx.newMessage.components) {
-					pageEx.newMessage.components = [
-						...pageEx.newMessage.components,
-						pageEx.paginationRow,
-					]
+					if (this.option.isV2Components) {
+						const lastContainer = pageEx.newMessage.components[pageEx.newMessage.components.length - 1]
+						if (lastContainer instanceof ContainerBuilder) {
+							lastContainer.addActionRowComponents(pageEx.paginationRow)
+						} else {
+							pageEx.newMessage.components = [
+								...pageEx.newMessage.components,
+								new ContainerBuilder().addActionRowComponents(pageEx.paginationRow),
+							]
+						}
+					} else {
+						pageEx.newMessage.components = [
+							...pageEx.newMessage.components,
+							pageEx.paginationRow,
+						]
+					}
 				} else {
-					pageEx.newMessage.components = [pageEx.paginationRow]
+					pageEx.newMessage.components = this.option.isV2Components
+						? [new ContainerBuilder().addActionRowComponents(pageEx.paginationRow)]
+						: [pageEx.paginationRow]
 				}
+
 
 				await collectInteraction.editReply({ ...pageEx.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [] }).catch(() => {
 					this.unableToUpdate()

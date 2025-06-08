@@ -279,19 +279,24 @@ var Pagination = class {
       throw Error("Pagination: Page not found send()");
     }
     if (page.newMessage.components) {
-      if (!this.option.isV2Components) {
+      if (this.option.isV2Components) {
+        const lastContainer = page.newMessage.components[page.newMessage.components.length - 1];
+        if (lastContainer instanceof import_discord2.ContainerBuilder) {
+          lastContainer.addActionRowComponents(page.paginationRow);
+        } else {
+          page.newMessage.components = [
+            ...page.newMessage.components,
+            new import_discord2.ContainerBuilder().addActionRowComponents(page.paginationRow)
+          ];
+        }
+      } else {
         page.newMessage.components = [
           ...page.newMessage.components,
           page.paginationRow
         ];
-      } else {
-        page.newMessage.components = [
-          ...page.newMessage.components,
-          new import_discord2.ContainerBuilder().addActionRowComponents(page.paginationRow)
-        ];
       }
     } else {
-      page.newMessage.components = [page.paginationRow];
+      page.newMessage.components = this.option.isV2Components ? [new import_discord2.ContainerBuilder().addActionRowComponents(page.paginationRow)] : [page.paginationRow];
     }
     let message;
     if (this.sendTo instanceof import_discord2.Message) {
@@ -364,12 +369,24 @@ var Pagination = class {
           throw Error("Pagination: Out of bound page");
         }
         if (pageEx.newMessage.components) {
-          pageEx.newMessage.components = [
-            ...pageEx.newMessage.components,
-            pageEx.paginationRow
-          ];
+          if (this.option.isV2Components) {
+            const lastContainer = pageEx.newMessage.components[pageEx.newMessage.components.length - 1];
+            if (lastContainer instanceof import_discord2.ContainerBuilder) {
+              lastContainer.addActionRowComponents(pageEx.paginationRow);
+            } else {
+              pageEx.newMessage.components = [
+                ...pageEx.newMessage.components,
+                new import_discord2.ContainerBuilder().addActionRowComponents(pageEx.paginationRow)
+              ];
+            }
+          } else {
+            pageEx.newMessage.components = [
+              ...pageEx.newMessage.components,
+              pageEx.paginationRow
+            ];
+          }
         } else {
-          pageEx.newMessage.components = [pageEx.paginationRow];
+          pageEx.newMessage.components = this.option.isV2Components ? [new import_discord2.ContainerBuilder().addActionRowComponents(pageEx.paginationRow)] : [pageEx.paginationRow];
         }
         await collectInteraction.editReply({ ...pageEx.newMessage, flags: this.option.isV2Components ? "IsComponentsV2" : [] }).catch(() => {
           this.unableToUpdate();
