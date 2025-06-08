@@ -130,26 +130,12 @@ await pagination.start();
 
 ```typescript
 import { Pagination, PaginationType } from '@qkogarashi/pagination';
-import { ContainerBuilder } from 'discord.js';
+import { ContainerBuilder, SectionBuilder, TextDisplayBuilder } from 'discord.js';
 
 // Create embeds for pages
 const pages = [
-  { components: [
-      new ContainerBuilder()
-      .addSectionComponents(
-        new SectionBuilder()
-        .addTextDisplayComponents(new TextDisplayBuilder({ content: `Exmple — 1` }))
-      )
-		] 
-  },
-  { components: [
-      new ContainerBuilder()
-      .addSectionComponents(
-        new SectionBuilder()
-        .addTextDisplayComponents(new TextDisplayBuilder({ content: `Exmple — 2` }))
-      )
-		] 
-  },,
+  { components: [new ContainerBuilder().addSectionComponents(new SectionBuilder().addTextDisplayComponents(new TextDisplayBuilder({ content: `Example — 1` })))] },
+  { components: [new ContainerBuilder().addSectionComponents(new SectionBuilder().addTextDisplayComponents(new TextDisplayBuilder({ content: `Example — 2` })))] },
 ];
 
 // Create pagination with v2 components
