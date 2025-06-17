@@ -1,5 +1,5 @@
 import * as discord_js from 'discord.js';
-import { BaseMessageOptions, JSONEncodable, AttachmentPayload, MessageCollectorOptionsParams, MessageComponentType, Message, APIMessageComponentEmoji, ButtonStyle, ActionRowBuilder, MessageActionRowComponentBuilder, APIActionRowComponent, APIButtonComponent, APIChannelSelectComponent, APIMentionableSelectComponent, APIRoleSelectComponent, APIStringSelectComponent, APIUserSelectComponent, CommandInteraction, MessageComponentInteraction, ContextMenuCommandInteraction, TextBasedChannel, PartialGroupDMChannel, InteractionCollector, ButtonInteraction, StringSelectMenuInteraction } from 'discord.js';
+import { BaseMessageOptions, JSONEncodable, AttachmentPayload, MessageCollectorOptionsParams, MessageComponentType, Message, ComponentEmojiResolvable, ButtonStyle, ActionRowBuilder, MessageActionRowComponentBuilder, APIActionRowComponent, APIButtonComponent, APIChannelSelectComponent, APIMentionableSelectComponent, APIRoleSelectComponent, APIStringSelectComponent, APIUserSelectComponent, CommandInteraction, MessageComponentInteraction, ContextMenuCommandInteraction, TextBasedChannel, PartialGroupDMChannel, InteractionCollector, ButtonInteraction, StringSelectMenuInteraction } from 'discord.js';
 
 declare const defaultTime = 300000;
 declare const defaultIds: {
@@ -61,7 +61,7 @@ interface ButtonOptions {
     /**
    * Button emoji
    */
-    emoji?: APIMessageComponentEmoji;
+    emoji?: ComponentEmojiResolvable;
     /**
    * Button id
    */

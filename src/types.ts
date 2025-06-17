@@ -4,7 +4,6 @@ import type {
 	APIButtonComponent,
 	APIChannelSelectComponent,
 	APIMentionableSelectComponent,
-	APIMessageComponentEmoji,
 	APIRoleSelectComponent,
 	APIStringSelectComponent,
 	APIUserSelectComponent,
@@ -12,6 +11,7 @@ import type {
 	BaseMessageOptions,
 	ButtonStyle,
 	CommandInteraction,
+	ComponentEmojiResolvable,
 	ContextMenuCommandInteraction,
 	JSONEncodable,
 	Message,
@@ -103,7 +103,7 @@ interface ButtonOptions {
 	/**
    * Button emoji
    */
-	emoji?: APIMessageComponentEmoji;
+	emoji?: ComponentEmojiResolvable;
 
 	/**
    * Button id
